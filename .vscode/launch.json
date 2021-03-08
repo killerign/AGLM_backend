@@ -17,7 +17,6 @@
             "name": "Launch with nodemon",
             "type": "node",
             "request": "launch",
-            "port":5858,
             "address":"localhost",
             "restart":true,
             "program": "${workspaceRoot}/node_modules/nodemon/bin/nodemon.js",
