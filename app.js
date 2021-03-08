@@ -10,7 +10,7 @@ app.use('/', apiroutes); //using routes specified externally
 app.use(express.json());
 mongoose.connect(url,{useNewUrlParser: true})
   .then(()=>{
-    app.listen(3000);
+    app.listen(port);
     console.log('database connected!');
     mongoose.connection.db.listCollections({name: 'login'})
     .next(function(err, collinfo) {
