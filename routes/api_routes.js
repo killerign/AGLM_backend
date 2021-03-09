@@ -4,5 +4,6 @@ var jsonParser = bodyParser.json();
 const postcontroller = require('../controllers/post_controller');
 const router = express();
 var cors = require('cors')
-router.post('/', jsonParser, cors() , postcontroller.showIndex);
+router.use(cors());
+router.post('/', jsonParser , postcontroller.showIndex);
 module.exports = router;
