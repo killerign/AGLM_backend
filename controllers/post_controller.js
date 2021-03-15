@@ -18,7 +18,7 @@ today = dd+'/'+mm+'/'+yyyy;
  }
 
  exports.past = (req,res,next) => {
-     var temp = dd-1+'/'+mm+'/'+yyyy
+     var temp = dd-1+'/'+mm+'/'+yyyy;
      lecture.find({"Date": { $lt : temp}},{_id : 0})
      .then(result =>{
          next();
@@ -31,7 +31,8 @@ today = dd+'/'+mm+'/'+yyyy;
  }
 
  exports.present = (req,res,next) => {
-    lecture.find({"Date":  today},{_id : 0})
+    var temp = dd-1+'/'+mm+'/'+yyyy;
+    lecture.find({$and :[{"Date":  { $lt:today}},{"Date": { $gt: temp}}]},{_id : 0})
     .then(result =>{
         next();
         res.send(result);
