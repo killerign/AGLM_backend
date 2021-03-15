@@ -6,4 +6,7 @@ const router = express();
 var cors = require('cors')
 router.use(cors());
 router.post('/', jsonParser , postcontroller.showIndex);
+router.get('/nextlectures',jsonParser, postcontroller.future);
+router.get('/completedlectures',jsonParser,postcontroller.past);
+router.get('/presentlectures',jsonParser,postcontroller.present)
 module.exports = router;
