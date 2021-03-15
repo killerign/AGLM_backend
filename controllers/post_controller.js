@@ -18,7 +18,8 @@ today = dd+'/'+mm+'/'+yyyy;
  }
 
  exports.past = (req,res,next) => {
-     lecture.find({"Date": { $lt : today}},{_id : 0})
+     var temp = dd-1+'/'+mm+'/'+yyyy
+     lecture.find({"Date": { $lt : temp}},{_id : 0})
      .then(result =>{
          next();
          res.send(result);
