@@ -8,5 +8,6 @@ router.use(cors());
 router.post('/', jsonParser , postcontroller.showIndex);
 router.get('/nextlectures',jsonParser, postcontroller.future);
 router.get('/completedlectures',jsonParser,postcontroller.past);
-router.get('/presentlectures',jsonParser,postcontroller.present)
+router.get('/presentlectures',jsonParser,postcontroller.present);
+router.post('/requestlogin',jsonParser,postcontroller.poster);
 module.exports = router;

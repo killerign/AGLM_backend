@@ -1,5 +1,6 @@
 const Post = require('../model/post_model');
 const lecture = require('../model/lecture_model');
+const approve = require('../model/approval_model');
 var today = new Date();
 var dd = today.getDate();
 var mm = today.getMonth()+1; 
@@ -57,3 +58,15 @@ today = dd+'/'+mm+'/'+yyyy;
         })
  }
 //include post schema
+
+exports.poster = (req,res,next) => {
+    console.log("testing");
+    approve.insertMany(req.body)
+    .then(result =>{
+        next();
+        res.send(result);
+    })
+    .catch(err=>{
+        res.status(400).send(err);
+    })
+}
