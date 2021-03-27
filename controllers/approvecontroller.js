@@ -17,7 +17,7 @@ exports.sendall = (req,res,next) => {
     approve.find({},{_id : 0})
     .then(result => {
         next();
-        res.send({status : "Sucess"});
+        res.send(result);
     })
     .catch(err=>{
         res.status(400).send(err);
@@ -29,7 +29,7 @@ exports.deleter = (req,res,next) => {
     approve.deleteOne({ email : req.body.email},{_id: 0})
     .then(result => {
         next();
-        res.send(result);
+        res.send({status: "Success"});
     })
     .catch(err => {
         res.status(400).send(err);
