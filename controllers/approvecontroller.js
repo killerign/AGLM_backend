@@ -5,7 +5,7 @@ exports.poster = (req,res,next) => {
     approve.insertMany(req.body)
     .then(result =>{
         next();
-        res.send({status:"Sucess"});
+        res.send({status:"Success"});
     })
     .catch(err=>{
         res.send({status:"Failure"});
