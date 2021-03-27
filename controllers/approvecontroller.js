@@ -5,10 +5,10 @@ exports.poster = (req,res,next) => {
     approve.insertMany(req.body)
     .then(result =>{
         next();
-        res.send(result);
+        res.send({status:"Sucess"});
     })
     .catch(err=>{
-        res.status(400).send(err);
+        res.send({status:"Failure"});
     })
 }
 
@@ -20,7 +20,7 @@ exports.sendall = (req,res,next) => {
         res.send(result);
     })
     .catch(err=>{
-        res.status(400).send(err);
+        res.send({status : "Failure"});
     })
 }
 
@@ -32,6 +32,6 @@ exports.deleter = (req,res,next) => {
         res.send({status: "Success"});
     })
     .catch(err => {
-        res.status(400).send(err);
+        res.send({status: "Failure"});
     })
 }
