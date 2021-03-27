@@ -14,10 +14,10 @@ exports.poster = (req,res,next) => {
 
 exports.sendall = (req,res,next) => {
     console.log("Here mate");
-    approve.find({_id : 0})
+    approve.find({},{_id : 0})
     .then(result => {
         next();
-        res.send(result);
+        res.send({status : "Sucess"});
     })
     .catch(err=>{
         res.status(400).send(err);
