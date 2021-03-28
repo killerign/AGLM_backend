@@ -1,8 +1,20 @@
 const approve = require('../model/approval_model');
 
 exports.poster = (req,res,next) => {
-    console.log("testing");
-    approve.insertMany(req.body)
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    today = dd+'/'+mm+'/'+yyyy;
+    var obj = req.body;
+    obj["Date"]=today;
+    /*
+    var temp = JSON.string
+    obj = JSON.parse(req.body);
+    obj.table.push({"Date": today});
+    json = JSON.stringify(obj);
+    console.log(json);*/
+    approve.insertMany(obj)
     .then(result =>{
         next();
         res.send({status:"Success"});

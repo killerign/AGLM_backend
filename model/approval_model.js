@@ -15,6 +15,10 @@ const postschema = new schema({
         require:true,
         type:String
     },
+    Date:{
+        require:true,
+        type:String
+    }
 });
 
 module.exports = mongoose.model('approval',postschema);
