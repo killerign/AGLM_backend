@@ -51,7 +51,7 @@ exports.deleter = (req,res,next) => {
     approve.findOneAndDelete({"email" : req.body.email})
     .then (result =>{
         next();
-        res.send(result);
+        res.send({status : "Success"});
         if(req.body.uid != ""){
         post.create({"uid": req.body.uid, "type" : "guser"})
         .then(result => {
@@ -68,6 +68,6 @@ exports.deleter = (req,res,next) => {
         }
         })
     .catch(err =>{
-        res.send({status : "find error"});
+        res.send({status : "Failure"});
     })
     }
