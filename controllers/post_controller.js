@@ -4,7 +4,7 @@ const Post = require('../model/post_model');
 
  exports.showIndex = (req, res,next) => {
      console.log(req.body);
-     Post.find({"uid": req.body.uid},{_id : 0}) //fetches all the posts
+     Post.findOne({"uid": req.body.uid},{_id : 0}) //fetches all the posts
      .then(result => {
         
         next();
