@@ -11,7 +11,11 @@ app.use(express.json());
 mongoose.connect(url,{useNewUrlParser: true})
   .then(()=>{
     app.listen(port);
-    console.log('database connected!');
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    console.log(mm);
     mongoose.connection.db.listCollections({name: 'login'})
     .next(function(err, collinfo) {
         if (collinfo) {

@@ -21,4 +21,4 @@ const postschema = new schema({
     }
 });
 
-module.exports = mongoose.model('approval',postschema);
+module.exports = mongoose.model('approvals',postschema);
