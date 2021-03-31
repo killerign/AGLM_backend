@@ -79,8 +79,8 @@ exports.past = (req,res,next) => {
         dd = '0'+dd
     } 
     today = yyyy+'/'+mm+"/"+dd;
-    console.log(req.body.rollno)
-    lecture.find({ $and: [  {"Date": today} ,{ registered: { $in: [req.body.rollno] } }  ] },{_id : 0})
+    console.log(req.body.uid)
+    lecture.find({ $and: [  {"Date": today} ,{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
     .then(result =>{
         next();
         res.send(result);
@@ -126,8 +126,8 @@ exports.future = (req,res,next) => {
         dd = '0'+dd
     } 
     today = yyyy+'/'+mm+"/"+dd;
-    console.log(req.body.rollno)
-    lecture.find({ $and: [  {"Date": {$gt : today}} ,{ registered: { $in: [req.body.rollno] } }  ] },{_id : 0})
+    console.log(req.body.uid)
+    lecture.find({ $and: [  {"Date": {$gt : today}} ,{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
     .then(result =>{
         next();
         res.send(result);
@@ -149,8 +149,8 @@ exports.checkregisters_pre = (req,res,next) => {
         dd = '0'+dd
     } 
     today = yyyy+'/'+mm+"/"+dd;
-    console.log(req.body.rollno)
-    lecture.find({ $and: [  {"Date": {$lt : today}} ,{ registered: { $in: [req.body.rollno] } }  ] },{_id : 0})
+    console.log(req.body.uid)
+    lecture.find({ $and: [  {"Date": {$lt : today}} ,{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
     .then(result =>{
         next();
         res.send(result);
@@ -172,5 +172,5 @@ exports.counter = (req,res,next) => {
         dd = '0'+dd
     } 
     today = yyyy+'/'+mm+"/"+dd;
-    
+
 }
