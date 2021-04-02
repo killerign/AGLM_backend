@@ -8,7 +8,7 @@ const client = new MongoClient(url);
 const apiroutes = require('./routes/api_routes');
 app.use('/', apiroutes); //using routes specified externally
 app.use(express.json());
-mongoose.connect(url,{useNewUrlParser: true})
+mongoose.connect(url,{useNewUrlParser: true,useUnifiedTopology: true})
   .then(()=>{
     app.listen(port);
     var today = new Date();
