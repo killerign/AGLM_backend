@@ -9,9 +9,17 @@ exports.past = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    var hr = today.getHours();
+    if(hr<10)
+    hr='0'+hr;
+    var min = today.getMinutes();
+    if(min<10)
+    min='0'+min;
+    var time = hr+":"+min
     var yyyy = today.getFullYear();
     today = yyyy+'/'+mm+'/'+dd;
-     lecture.find({"Date": { $lt : today}},{_id : 0})
+    console.log(time)
+     lecture.find({$or : [{"geoinfo.eddate" : {$lt : today}},{$and : [{"geoinfo.edtime" : {$lt : time}},{"geoinfo.eddate": today}]}]},{_id : 0})
      .then(result =>{
          next();
          res.send(result);
@@ -32,8 +40,16 @@ exports.past = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    var hr = today.getHours();
+    if(hr<10)
+    hr='0'+hr;
+    var min = today.getMinutes();
+    if(min<10)
+    min='0'+min;
+    var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
-    lecture.find({$and :[{"Date":  today}]},{_id : 0})
+    console.log(today)
+    lecture.find({$and :[{"geoinfo.eddate" : {$gte : today}},{"geoinfo.stdate": {$lte : today}},{"geoinfo.edtime":{$lte :time}},{"geoinfo.sttime": {$gte: time}}]},{_id : 0})
     .then(result =>{
         next();
         res.send(result);
@@ -54,9 +70,16 @@ exports.past = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    var hr = today.getHours();
+    if(hr<10)
+    hr='0'+hr;
+    var min = today.getMinutes();
+    if(min<10)
+    min='0'+min;
+    var time = hr+":"+min
     today = yyyy+'/'+mm+'/'+dd;
     console.log("here");
-    lecture.find({"Date":{ $gt : today}},{_id : 0})
+    lecture.find({$or : [{"geoinfo.stdate" : {$gt : today}},{$and : [{"geoinfo.sttime" : {$gt : time}},{"geoinfo.eddate": today}]}]},{_id : 0})
      .then(result =>{
              next();
              console.log(result);
@@ -78,9 +101,16 @@ exports.past = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    var hr = today.getHours();
+    if(hr<10)
+    hr='0'+hr;
+    var min = today.getMinutes();
+    if(min<10)
+    min='0'+min;
+    var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
     console.log(req.body.uid)
-    lecture.find({ $and: [  {"Date": today} ,{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
+    lecture.find({ $and: [{"geoinfo.eddate" : {$gte : today}},{"geoinfo.stdate": {$lte : today}},{"geoinfo.edtime":{$lte :time}},{"geoinfo.sttime": {$gte: time}},{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
     .then(result =>{
         next();
         res.send(result);
@@ -90,30 +120,6 @@ exports.past = (req,res,next) => {
            res.status(400).send(err);
        })
 }
-
-exports.future = (req,res,next) => {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; 
-    var yyyy = today.getFullYear();
-    if(mm < 10){
-        mm = '0'+mm}
-    if(dd < 10){
-        dd = '0'+dd
-    } 
-    today = yyyy+'/'+mm+'/'+dd;
-    console.log("here");
-    lecture.find({"Date":{ $gt : today}},{_id : 0})
-     .then(result =>{
-             next();
-             console.log(result);
-             res.send(result);
-     })
-     .catch(err =>
-        {
-            res.status(400).send(err);
-        })
- }
 
  exports.checkregisters_fut = (req,res,next) => {
     var today = new Date();
@@ -125,9 +131,16 @@ exports.future = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    var hr = today.getHours();
+    if(hr<10)
+    hr='0'+hr;
+    var min = today.getMinutes();
+    if(min<10)
+    min='0'+min;
+    var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
     console.log(req.body.uid)
-    lecture.find({ $and: [  {"Date": {$gt : today}} ,{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
+    lecture.find({ $and: [{$or : [{"geoinfo.stdate" : {$gt : today}},{$and : [{"geoinfo.sttime" : {$gt : time}},{"geoinfo.eddate": today}]}]},{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
     .then(result =>{
         next();
         res.send(result);
@@ -148,9 +161,16 @@ exports.checkregisters_pre = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    var hr = today.getHours();
+    if(hr<10)
+    hr='0'+hr;
+    var min = today.getMinutes();
+    if(min<10)
+    min='0'+min;
+    var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
     console.log(req.body.uid)
-    lecture.find({ $and: [  {"Date": {$lt : today}} ,{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
+    lecture.find({ $and: [{$or : [{"geoinfo.eddate" : {$lt : today}},{$and : [{"geoinfo.edtime" : {$lt : time}},{"geoinfo.eddate": today}]}]},{ registered: { $in: [req.body.uid] } }  ] },{_id : 0})
     .then(result =>{
         next();
         res.send(result);
@@ -171,14 +191,21 @@ exports.counter = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    var hr = today.getHours();
+    if(hr<10)
+    hr='0'+hr;
+    var min = today.getMinutes();
+    if(min<10)
+    min='0'+min;
+    var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
-    lecture.countDocuments({$and :[{"Date":  today}]},function (err,count){
+    lecture.countDocuments({$and :[{"geoinfo.eddate" : {$gte : today}},{"geoinfo.stdate": {$lte : today}},{"geoinfo.edtime":{$lte :time}},{"geoinfo.sttime": {$gte: time}}]},function (err,count){
         if(err){
             res.sendStatus(400)
         }
         else{
             var now = count;
-            lecture.countDocuments({"Date": {$gt : today}},function(err,count){
+            lecture.countDocuments({$or : [{"geoinfo.stdate" : {$gt : today}},{$and : [{"geoinfo.sttime" : {$gt : time}},{"geoinfo.eddate": today}]}]},function(err,count){
             if(err){
                 res.sendStatus(400)
             }
@@ -234,34 +261,3 @@ exports.counter = (req,res,next) => {
      }
      call(today,req.body.uid);*/
     }
-
-async function helper(date){
-    lecture.count({$and :[{"Date":  date}]},{_id : 0})
-    .then(result => {
-        return(result);
-    })
-    .catch(err => {
-        return -1
-    })
-}
-async function helper1(date){
-    lecture.count({"Date":{ $gt : date}},{_id : 0})
-    .then(result =>{
-            return result;
-    })
-    .catch(err =>
-       {
-           return -1
-       })
-}
-
-async function helper2(uid){
-    lecture.count({ registered: { $in: [uid] } })
-    .then(result => {
-        return(result)
-    })
-    .catch(err => {
-        return -1
-    })
-}
-
