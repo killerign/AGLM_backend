@@ -17,5 +17,6 @@ const postSchema = new schema({
         require:true,
         type:String
     },
-}); 
+},
+{ versionKey: false }); 
 module.exports = mongoose.model('login',postSchema);

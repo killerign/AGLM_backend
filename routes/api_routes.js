@@ -18,4 +18,5 @@ router.post('/mylectures',jsonParser,lecturecontroller.checkregisters);
 router.post('/mylectures_future',jsonParser,lecturecontroller.checkregisters_fut);
 router.post('/mylectures_pre',jsonParser,lecturecontroller.checkregisters_pre);
 router.post('/countlectures',jsonParser,lecturecontroller.counter);
+router.post('/createlecture',jsonParser,lecturecontroller.creator);
 module.exports = router;
