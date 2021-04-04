@@ -79,7 +79,7 @@ exports.past = (req,res,next) => {
     var time = hr+":"+min
     today = yyyy+'/'+mm+'/'+dd;
     console.log("here");
-    lecture.find({$or : [{"geoinfo.stdate" : {$gt : today}},{$and : [{"geoinfo.sttime" : {$gt : time}},{"geoinfo.eddate": today}]}]},{_id : 0}).sort({"geoinfo.eddate":-1})
+    lecture.find({$or : [{"geoinfo.stdate" : {$gt : today}},{$and :[{"geoinfo.eddate" : {$gt : today}},{"geoinfo.stdate": {$lte : today}},{$or :[{"geoinfo.edtime":{$gt :time}},{"geoinfo.sttime": {$lt: time}}]}]}]},{_id : 0}).sort({"geoinfo.eddate":1})
      .then(result =>{
              next();
              console.log(result);
@@ -140,7 +140,7 @@ exports.past = (req,res,next) => {
     var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
     console.log(req.body.uid)
-    lecture.find({ $and: [{$or : [{"geoinfo.stdate" : {$gt : today}},{$and : [{"geoinfo.sttime" : {$gt : time}},{"geoinfo.eddate": today}]}]},{ registered: { $in: [req.body.uid] } }  ] },{_id : 0}).sort({"geoinfo.eddate":1})
+    lecture.find({ $and: [{$or : [{"geoinfo.stdate" : {$gt : today}},{$and :[{"geoinfo.eddate" : {$gt : today}},{"geoinfo.stdate": {$lte : today}},{$or :[{"geoinfo.edtime":{$gt :time}},{"geoinfo.sttime": {$lt: time}}]}]}]},{ registered: { $in: [req.body.uid] } }  ] },{_id : 0}).sort({"geoinfo.eddate":1})
     .then(result =>{
         next();
         res.send(result);
@@ -205,7 +205,7 @@ exports.counter = (req,res,next) => {
         }
         else{
             var now = count;
-            lecture.countDocuments({$or : [{"geoinfo.stdate" : {$gt : today}},{$and : [{"geoinfo.sttime" : {$gt : time}},{"geoinfo.eddate": today}]}]},function(err,count){
+            lecture.countDocuments({$or : [{"geoinfo.stdate" : {$gt : today}},{$and :[{"geoinfo.eddate" : {$gt : today}},{"geoinfo.stdate": {$lte : today}},{$or :[{"geoinfo.edtime":{$gt :time}},{"geoinfo.sttime": {$lt: time}}]}]}]},function(err,count){
             if(err){
                 res.sendStatus(400)
             }
