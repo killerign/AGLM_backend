@@ -48,7 +48,7 @@ exports.past = (req,res,next) => {
     min='0'+min;
     var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
-    console.log(today)
+    console.log(today,time)
     lecture.find({$and :[{"geoinfo.eddate" : {$gte : today}},{"geoinfo.stdate": {$lte : today}},{"geoinfo.edtime":{$gte :time}},{"geoinfo.sttime": {$lte: time}}]},{_id : 0})
     .then(result =>{
         next();
@@ -79,10 +79,9 @@ exports.past = (req,res,next) => {
     var time = hr+":"+min
     today = yyyy+'/'+mm+'/'+dd;
     console.log("here");
-    lecture.find({$or : [{"geoinfo.stdate" : {$gt : today}},{$and :[{"geoinfo.eddate" : {$gt : today}},{"geoinfo.stdate": {$lte : today}},{$or :[{"geoinfo.edtime":{$gt :time}},{"geoinfo.sttime": {$lt: time}}]}]}]},{_id : 0}).sort({"geoinfo.eddate":1})
+    lecture.find({$or : [{"geoinfo.stdate" : {$gt : today}},{$and :[{"geoinfo.eddate" : {$gt : today}},{"geoinfo.stdate": {$lte : today}},{$or :[{"geoinfo.edtime":{$lt :time}},{"geoinfo.sttime": {$gt: time}}]}]}]},{_id : 0}).sort({"geoinfo.eddate":1})
      .then(result =>{
              next();
-             console.log(result);
              res.send(result);
      })
      .catch(err =>
@@ -281,12 +280,12 @@ exports.counter = (req,res,next) => {
                 .catch(err => {
                     next();
                     res.sendStatus(400)
-                })
+                });
             }
-        })
+        });
     }
-    
-    exports.regis = (req,res,next) => {
+        
+exports.regis = (req,res,next) => {
     lecture.findOneAndUpdate({lecture_id: req.body.lecture_id},{$push : {registered: req.body.uid}})
     .then(result => {
         next();
@@ -307,4 +306,3 @@ exports.regigas = (req,res,next) => {
         res.sendStatus(400)
     });
 }
-        
