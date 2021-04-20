@@ -49,7 +49,7 @@ exports.past = (req,res,next) => {
     var time = hr+":"+min
     today = yyyy+'/'+mm+"/"+dd;
     console.log(today)
-    lecture.find({$and :[{"geoinfo.eddate" : {$gte : today}},{"geoinfo.stdate": {$lte : today}},{"geoinfo.edtime":{$lte :time}},{"geoinfo.sttime": {$gte: time}}]},{_id : 0})
+    lecture.find({$and :[{"geoinfo.eddate" : {$gte : today}},{"geoinfo.stdate": {$lte : today}},{"geoinfo.edtime":{$gte :time}},{"geoinfo.sttime": {$lte: time}}]},{_id : 0})
     .then(result =>{
         next();
         res.send(result);
