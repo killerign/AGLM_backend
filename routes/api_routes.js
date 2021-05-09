@@ -3,7 +3,8 @@ var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json();
 const postcontroller = require('../controllers/post_controller');
 const approvecontroller = require('../controllers/approvecontroller');
-const lecturecontroller = require('../controllers/lecture_controller')
+const lecturecontroller = require('../controllers/lecture_controller');
+const lecturercontroller = require('../controllers/lecturer_controller')
 const router = express();
 var cors = require('cors')
 router.use(cors());
@@ -21,4 +22,5 @@ router.post('/countlectures',jsonParser,lecturecontroller.counter);
 router.post('/createlecture',jsonParser,lecturecontroller.creator);
 router.post('/register',jsonParser,lecturecontroller.regis);
 router.post('/remove',jsonParser,lecturecontroller.regigas);
+router.post('/miniLecturer',jsonParser,lecturercontroller.shortInfo);
 module.exports = router;
