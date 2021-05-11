@@ -14,6 +14,7 @@ exports.poster = (req,res,next) => {
     var obj = req.body;
 
     obj["Date"]=today;
+    var clear = "sunday";
     /*
     var temp = JSON.string
     obj = JSON.parse(req.body);
