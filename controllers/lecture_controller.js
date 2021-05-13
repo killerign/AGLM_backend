@@ -9,6 +9,7 @@ exports.past = (req,res,next) => {
     if(dd < 10){
         dd = '0'+dd
     } 
+    //horsing around
     var hr = today.getHours();
     if(hr<10)
     hr='0'+hr;
