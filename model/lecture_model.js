@@ -33,20 +33,6 @@ const postSchema = new schema({
           type: String,
           require: true
         },
-        instructor: {
-          name: {
-            type: String,
-            require: true
-          },
-          img: {
-            type: String,
-            require: true
-          },
-          position: {
-            type: String,
-            require: true
-          }
-        },
         geoinfo: {
           stdate: {
             type: String,
@@ -77,7 +63,15 @@ const postSchema = new schema({
           type: String,
           require: true
         },
+        lecturer_id: {
+          type: String,
+          require: true
+        },
         registered: {
+          type: Array,
+          require: true
+        },
+        repository:{
           type: Array,
           require: true
         }

@@ -22,5 +22,11 @@ router.post('/countlectures',jsonParser,lecturecontroller.counter);
 router.post('/createlecture',jsonParser,lecturecontroller.creator);
 router.post('/register',jsonParser,lecturecontroller.regis);
 router.post('/remove',jsonParser,lecturecontroller.regigas);
-router.post('/miniLecturer',jsonParser,lecturercontroller.shortInfo);
+router.post('/getLecturer',jsonParser,lecturercontroller.fullInfo);
+router.post('/getParticipants',jsonParser,lecturecontroller.getParticipants);
+router.post('/pastLectures',jsonParser,lecturercontroller.pastLectures);
+router.post('/addFile',jsonParser,lecturecontroller.addFile);
+router.get('/lecturerList',jsonParser,lecturercontroller.lecturerList);
+router.post('/createlecturer',jsonParser,lecturercontroller.createlecturer);
+
 module.exports = router;

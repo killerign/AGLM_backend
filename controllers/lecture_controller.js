@@ -1,4 +1,5 @@
 const lecture = require('../model/lecture_model');
+const User = require('../model/post_model');
 
 exports.past = (req,res,next) => {
     var today = new Date();
@@ -271,6 +272,7 @@ exports.counter = (req,res,next) => {
                 var obj = req.body;
                 obj["lecture_id"] = String(count+2);
                 obj["registered"]= [];
+                obj["repository"]= [[],[],[]];
                 console.log(typeof obj);
                 console.log(JSON.stringify(obj));
                 lecture.create(obj)
@@ -306,4 +308,57 @@ exports.regigas = (req,res,next) => {
     .catch(err => {
         res.sendStatus(400)
     });
+}
+exports.addFile = (req,res,next) => {
+    var type=req.body.url.substring(req.body.url.lastIndexOf(".")+1);
+    if(req.body.type=='PNG' || req.body.type=='JPG'){
+        lecture.findOneAndUpdate({lecture_id: req.body.lecture_id},{$push : {"repository.0": req.body.url}})
+        .then(result => {
+            next();
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            res.sendStatus(400)
+        });
+    }
+    else if(req.body.type=='MP4' || req.body.type=='PDF' || req.body.type=='DOC'){
+        lecture.findOneAndUpdate({lecture_id: req.body.lecture_id},{$push : {"repository.2": [req.body.name,req.body.type,req.body.url]}})
+        .then(result => {
+            next();
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            res.sendStatus(400)
+        });
+    }
+    else{
+        lecture.findOneAndUpdate({lecture_id: req.body.lecture_id},{$push : {"repository.1": req.body.url}})
+        .then(result => {
+            next();
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            res.sendStatus(400)
+        });
+    }
+}
+
+exports.getParticipants = (req,res,next) => {
+    lecture.findOne({"lecture_id": req.body.id},{_id : 0}).select('registered')
+     .then( async (result)  =>{
+         var email=[];
+        const forLoop = async _ => {
+            for (let i = 0; i < result['registered'].length; i++) {
+                var oneEmail= await User.findOne({"uid": result['registered'][i]},{_id : 0}).select('email');
+                email.push(oneEmail);
+            }
+            console.log(email);
+          }
+        await forLoop();
+        res.send(email);
+     })
+     .catch(err =>
+        {
+            res.status(400).send(err);
+        })
 }

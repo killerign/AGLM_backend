@@ -10,6 +10,9 @@ const postSchema = new schema({
     roll_no:{
         type:String
     },
+    email:{
+        type:String
+    },
     name:{
         type:String
     },

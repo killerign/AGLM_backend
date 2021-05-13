@@ -54,7 +54,7 @@ exports.deleter = (req,res,next) => {
         next();
         res.send({status : "Success"});
         if(req.body.uid != ""){
-        post.create({"uid": req.body.uid, "type" : "guser"})
+        post.create({"uid": req.body.uid, "type" : "guser" ,"email":req.body.email})
         .then(result => {
             console.log(result);
             next();
